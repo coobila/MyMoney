@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android" android:orientation="vertical" android:background="@drawable/mainback" android:visibility="visible" android:layout_width="match_parent" android:layout_height="match_parent">
+    <TableLayout android:gravity="center_horizontal" android:id="@+id/tableLayout0" android:layout_width="wrap_content" android:layout_height="10dp"/>
+    <FrameLayout android:id="@+id/frameLayoutMain" android:layout_width="match_parent" android:layout_height="wrap_content">
+        <GridView android:gravity="center" android:id="@+id/gridview" android:visibility="visible" android:layout_width="match_parent" android:layout_height="275dp" android:horizontalSpacing="0dp" android:verticalSpacing="15dp" android:stretchMode="columnWidth" android:columnWidth="90dp" android:numColumns="auto_fit"/>
+    </FrameLayout>
+    <TableRow android:id="@+id/tableRow1" android:background="@drawable/mainbk" android:paddingTop="7dp" android:layout_width="match_parent" android:layout_height="36dp">
+        <TextView android:textSize="16dp" android:textColor="#ffffff" android:id="@+id/UpMonth" android:layout_width="80dp" android:layout_height="wrap_content" android:text=" ＜上個月"/>
+        <TextView android:textSize="16dp" android:textColor="#ffffff" android:gravity="left" android:id="@+id/NowMonthShow" android:paddingRight="14dp" android:layout_width="195dp" android:layout_height="wrap_content" android:text="2016/09月 項目統計金額"/>
+        <TextView android:textSize="16dp" android:textColor="#ffffff" android:gravity="right" android:id="@+id/DownMonth" android:layout_width="match_parent" android:layout_height="wrap_content" android:text="下個月＞ "/>
+    </TableRow>
+    <FrameLayout android:id="@+id/frameLayout1" android:background="@drawable/mainbk1" android:paddingLeft="8dp" android:paddingTop="5dp" android:paddingBottom="8dp" android:layout_width="match_parent" android:layout_height="match_parent">
+        <ListView android:id="@+id/DataList" android:layout_width="match_parent" android:layout_height="match_parent" android:cacheColorHint="#00000000"/>
+    </FrameLayout>
+    <TableLayout android:id="@+id/TableLayout01" android:background="#76a1b7" android:layout_width="match_parent" android:layout_height="20dp"/>
+    <TextView android:textColor="#8c5f18" android:id="@+id/DayOut" android:visibility="gone" android:layout_width="wrap_content" android:layout_height="22dp" android:text="本日支出："/>
+    <TextView android:textColor="#2a5e04" android:id="@+id/WeekOutMount" android:visibility="gone" android:layout_width="wrap_content" android:layout_height="22dp" android:text="本週支出："/>
+    <TextView android:textColor="#334895" android:id="@+id/InOutMount" android:visibility="gone" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="收支結餘："/>
+    <TextView android:textColor="#cc0000" android:id="@+id/MonthOutMount" android:visibility="gone" android:layout_width="wrap_content" android:layout_height="22dp" android:text="本月支出："/>
+</LinearLayout>
