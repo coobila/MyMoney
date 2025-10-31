@@ -8,9 +8,12 @@ import android.content.pm.ActivityInfo;
 import android.database.Cursor;
 import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
+import android.os.VibrationEffect;
 import android.os.Vibrator;
+import android.os.VibratorManager;
 import android.view.KeyEvent;
 import android.view.View;
 import android.widget.EditText;
@@ -317,8 +320,23 @@ public class Calc extends Activity {
     public void bsub(View CvClick) {
         if (this.ShowVibrate.equals("1")) {
             try {
-                Vibrator vibrator = (Vibrator) getSystemService("vibrator");
-                vibrator.vibrate(30L);
+                Vibrator vibrator = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
+
+                // 檢查裝置是否支援震動
+                if (vibrator != null && vibrator.hasVibrator()) {
+                    // 判斷目前的 Android 版本
+                    // 若為 API 26（Android 8.0 Oreo）或更高版本
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                        // 使用新的 API 方法
+                        vibrator.vibrate(VibrationEffect.createOneShot(30L, VibrationEffect.DEFAULT_AMPLITUDE));
+                    } else {
+                        // 舊版本（API 26 以下）使用原本的寫法
+                        // 也就是你的舊程式碼，它在 Android 16 上是完全正常的
+                        vibrator.vibrate(30L);
+                    }
+                }
+//                Vibrator vibrator = (Vibrator) getSystemService("vibrator");
+//                vibrator.vibrate(30L);
             } catch (Exception e) {
             }
         }
@@ -329,8 +347,23 @@ public class Calc extends Activity {
     public void bm(View CvClick) {
         if (this.ShowVibrate.equals("1")) {
             try {
-                Vibrator vibrator = (Vibrator) getSystemService("vibrator");
-                vibrator.vibrate(30L);
+                Vibrator vibrator = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
+
+                // 檢查裝置是否支援震動
+                if (vibrator != null && vibrator.hasVibrator()) {
+                    // 判斷目前的 Android 版本
+                    // 若為 API 26（Android 8.0 Oreo）或更高版本
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                        // 使用新的 API 方法
+                        vibrator.vibrate(VibrationEffect.createOneShot(30L, VibrationEffect.DEFAULT_AMPLITUDE));
+                    } else {
+                        // 舊版本（API 26 以下）使用原本的寫法
+                        // 也就是你的舊程式碼，它在 Android 16 上是完全正常的
+                        vibrator.vibrate(30L);
+                    }
+                }
+//                Vibrator vibrator = (Vibrator) getSystemService("vibrator");
+//                vibrator.vibrate(30L);
             } catch (Exception e) {
             }
         }
@@ -341,8 +374,23 @@ public class Calc extends Activity {
     public void br(View CvClick) {
         if (this.ShowVibrate.equals("1")) {
             try {
-                Vibrator vibrator = (Vibrator) getSystemService("vibrator");
-                vibrator.vibrate(30L);
+                Vibrator vibrator = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
+
+                // 檢查裝置是否支援震動
+                if (vibrator != null && vibrator.hasVibrator()) {
+                    // 判斷目前的 Android 版本
+                    // 若為 API 26（Android 8.0 Oreo）或更高版本
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                        // 使用新的 API 方法
+                        vibrator.vibrate(VibrationEffect.createOneShot(30L, VibrationEffect.DEFAULT_AMPLITUDE));
+                    } else {
+                        // 舊版本（API 26 以下）使用原本的寫法
+                        // 也就是你的舊程式碼，它在 Android 16 上是完全正常的
+                        vibrator.vibrate(30L);
+                    }
+                }
+//                Vibrator vibrator = (Vibrator) getSystemService("vibrator");
+//                vibrator.vibrate(30L);
             } catch (Exception e) {
             }
         }
@@ -353,8 +401,23 @@ public class Calc extends Activity {
     public void bc(View CvClick) {
         if (this.ShowVibrate.equals("1")) {
             try {
-                Vibrator vibrator = (Vibrator) getSystemService("vibrator");
-                vibrator.vibrate(30L);
+                Vibrator vibrator = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
+
+                // 檢查裝置是否支援震動
+                if (vibrator != null && vibrator.hasVibrator()) {
+                    // 判斷目前的 Android 版本
+                    // 若為 API 26（Android 8.0 Oreo）或更高版本
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                        // 使用新的 API 方法
+                        vibrator.vibrate(VibrationEffect.createOneShot(30L, VibrationEffect.DEFAULT_AMPLITUDE));
+                    } else {
+                        // 舊版本（API 26 以下）使用原本的寫法
+                        // 也就是你的舊程式碼，它在 Android 16 上是完全正常的
+                        vibrator.vibrate(30L);
+                    }
+                }
+//                Vibrator vibrator = (Vibrator) getSystemService("vibrator");
+//                vibrator.vibrate(30L);
             } catch (Exception e) {
             }
         }
@@ -364,8 +427,23 @@ public class Calc extends Activity {
     public void bb(View CvClick) {
         if (this.ShowVibrate.equals("1")) {
             try {
-                Vibrator vibrator = (Vibrator) getSystemService("vibrator");
-                vibrator.vibrate(30L);
+                Vibrator vibrator = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
+
+                // 檢查裝置是否支援震動
+                if (vibrator != null && vibrator.hasVibrator()) {
+                    // 判斷目前的 Android 版本
+                    // 若為 API 26（Android 8.0 Oreo）或更高版本
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                        // 使用新的 API 方法
+                        vibrator.vibrate(VibrationEffect.createOneShot(30L, VibrationEffect.DEFAULT_AMPLITUDE));
+                    } else {
+                        // 舊版本（API 26 以下）使用原本的寫法
+                        // 也就是你的舊程式碼，它在 Android 16 上是完全正常的
+                        vibrator.vibrate(30L);
+                    }
+                }
+//                Vibrator vibrator = (Vibrator) getSystemService("vibrator");
+//                vibrator.vibrate(30L);
             } catch (Exception e) {
             }
         }
@@ -379,8 +457,23 @@ public class Calc extends Activity {
     public void bq(View CvClick) {
         if (this.ShowVibrate.equals("1")) {
             try {
-                Vibrator vibrator = (Vibrator) getSystemService("vibrator");
-                vibrator.vibrate(30L);
+                Vibrator vibrator = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
+
+                // 檢查裝置是否支援震動
+                if (vibrator != null && vibrator.hasVibrator()) {
+                    // 判斷目前的 Android 版本
+                    // 若為 API 26（Android 8.0 Oreo）或更高版本
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                        // 使用新的 API 方法
+                        vibrator.vibrate(VibrationEffect.createOneShot(30L, VibrationEffect.DEFAULT_AMPLITUDE));
+                    } else {
+                        // 舊版本（API 26 以下）使用原本的寫法
+                        // 也就是你的舊程式碼，它在 Android 16 上是完全正常的
+                        vibrator.vibrate(30L);
+                    }
+                }
+//                Vibrator vibrator = (Vibrator) getSystemService("vibrator");
+//                vibrator.vibrate(30L);
             } catch (Exception e) {
             }
         }
@@ -459,8 +552,23 @@ public class Calc extends Activity {
     public void bref(View CvClick) {
         if (this.ShowVibrate.equals("1")) {
             try {
-                Vibrator vibrator = (Vibrator) getSystemService("vibrator");
-                vibrator.vibrate(30L);
+                Vibrator vibrator = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
+
+                // 檢查裝置是否支援震動
+                if (vibrator != null && vibrator.hasVibrator()) {
+                    // 判斷目前的 Android 版本
+                    // 若為 API 26（Android 8.0 Oreo）或更高版本
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                        // 使用新的 API 方法
+                        vibrator.vibrate(VibrationEffect.createOneShot(30L, VibrationEffect.DEFAULT_AMPLITUDE));
+                    } else {
+                        // 舊版本（API 26 以下）使用原本的寫法
+                        // 也就是你的舊程式碼，它在 Android 16 上是完全正常的
+                        vibrator.vibrate(30L);
+                    }
+                }
+//                Vibrator vibrator = (Vibrator) getSystemService("vibrator");
+//                vibrator.vibrate(30L);
             } catch (Exception e) {
             }
         }
@@ -470,8 +578,23 @@ public class Calc extends Activity {
     public void SaveExit(View CvClick) {
         if (this.ShowVibrate.equals("1")) {
             try {
-                Vibrator vibrator = (Vibrator) getSystemService("vibrator");
-                vibrator.vibrate(30L);
+                Vibrator vibrator = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
+
+                // 檢查裝置是否支援震動
+                if (vibrator != null && vibrator.hasVibrator()) {
+                    // 判斷目前的 Android 版本
+                    // 若為 API 26（Android 8.0 Oreo）或更高版本
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                        // 使用新的 API 方法
+                        vibrator.vibrate(VibrationEffect.createOneShot(30L, VibrationEffect.DEFAULT_AMPLITUDE));
+                    } else {
+                        // 舊版本（API 26 以下）使用原本的寫法
+                        // 也就是你的舊程式碼，它在 Android 16 上是完全正常的
+                        vibrator.vibrate(30L);
+                    }
+                }
+//                Vibrator vibrator = (Vibrator) getSystemService("vibrator");
+//                vibrator.vibrate(30L);
             } catch (Exception e) {
             }
         }
@@ -487,8 +610,23 @@ public class Calc extends Activity {
     public void Exit(View CvClick) {
         if (this.ShowVibrate.equals("1")) {
             try {
-                Vibrator vibrator = (Vibrator) getSystemService("vibrator");
-                vibrator.vibrate(30L);
+                Vibrator vibrator = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
+
+                // 檢查裝置是否支援震動
+                if (vibrator != null && vibrator.hasVibrator()) {
+                    // 判斷目前的 Android 版本
+                    // 若為 API 26（Android 8.0 Oreo）或更高版本
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                        // 使用新的 API 方法
+                        vibrator.vibrate(VibrationEffect.createOneShot(30L, VibrationEffect.DEFAULT_AMPLITUDE));
+                    } else {
+                        // 舊版本（API 26 以下）使用原本的寫法
+                        // 也就是你的舊程式碼，它在 Android 16 上是完全正常的
+                        vibrator.vibrate(30L);
+                    }
+                }
+//                Vibrator vibrator = (Vibrator) getSystemService("vibrator");
+//                vibrator.vibrate(30L);
             } catch (Exception e) {
             }
         }
