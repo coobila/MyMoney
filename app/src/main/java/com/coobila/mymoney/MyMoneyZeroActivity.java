@@ -1,9 +1,6 @@
 package com.coobila.mymoney;
 
 import static android.widget.Toast.*;
-
-import static java.lang.Process.*;
-
 import android.app.Activity;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -13,7 +10,6 @@ import android.content.res.Configuration;
 import android.database.Cursor;
 import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
-import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
 import android.os.Vibrator;
@@ -25,14 +21,9 @@ import android.view.Menu;
 import android.view.View;
 import android.widget.*;
 
-import androidx.activity.EdgeToEdge;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.graphics.Insets;
-import androidx.core.view.ViewCompat;
-import androidx.core.view.WindowInsetsCompat;
-import androidx.documentfile.provider.DocumentFile;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -89,6 +80,7 @@ public class MyMoneyZeroActivity extends AppCompatActivity {
 
     private static Context context;
 
+    //建立並顯示 Activity 頂部的選項選單
     public boolean onCreateOptionsMenu(Menu menu) {
         if (this.ShowVibrate.equals("1")) {
             try {
@@ -105,13 +97,14 @@ public class MyMoneyZeroActivity extends AppCompatActivity {
         return super.onCreateOptionsMenu(menu);
     }
 
-    @Override // android.app.Activity
+    @Override
     protected void onDestroy() {
         super.onDestroy();
         activityList.remove(this);
     }
 
-    @Override // android.app.Activity, android.content.ComponentCallbacks
+    //這個方法 onConfigurationChanged 是 Android Activity 生命週期的一部分。當裝置的設定發生變化時（例如螢幕方向、鍵盤可用性、語言等），系統會呼叫這個方法。
+    @Override
     public void onConfigurationChanged(@NonNull Configuration newConfig) {
         super.onConfigurationChanged(newConfig);
         if (newConfig.orientation == 2) {
@@ -140,11 +133,13 @@ public class MyMoneyZeroActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) throws SQLException {
         super.onCreate(savedInstanceState);
-        context = getApplicationContext();
+        context = getApplicationContext();//給全域變數
         setContentView(R.layout.main);
         Log.d("kevin -test----------", "onCreate------------");
         activityList.add(this);
         File dir = getFilesDir();
+
+        //判斷有無資料庫
         int OpenDataBase = 0;
         try {
             OpenDataBase = CreateDatabase();
@@ -196,8 +191,8 @@ public class MyMoneyZeroActivity extends AppCompatActivity {
 //        } catch (Exception e5) {
 //        }
 
-        this.ErrorPassword = 1.0d;
-        GridView gridview = (GridView) findViewById(R.id.gridview);
+        ErrorPassword = 1.0d;
+        GridView gridview = this.findViewById(R.id.gridview);
         ArrayList<HashMap<String, Object>> lstImageItem = new ArrayList<>();
         HashMap<String, Object> map1 = new HashMap<>();
         map1.put("ItemImage", Integer.valueOf(R.drawable.addout));
@@ -238,6 +233,8 @@ public class MyMoneyZeroActivity extends AppCompatActivity {
         SimpleAdapter saImageItems = new SimpleAdapter(this, lstImageItem, R.layout.grid_view_item, new String[]{"ItemImage", "ItemText"}, new int[]{R.id.ItemImage, R.id.ItemText});
         gridview.setAdapter((ListAdapter) saImageItems);
         gridview.setOnItemClickListener(new ItemClickListener());
+        //檢查裝置目前的螢幕方向是否為橫向
+        //1: 代表 直向 (Portrait);2: 代表 橫向 (Landscape)
         if (getResources().getConfiguration().orientation == 2) {
             GridView gridView = (GridView) findViewById(R.id.gridview);
             DisplayMetrics metrics = new DisplayMetrics();
@@ -253,6 +250,8 @@ public class MyMoneyZeroActivity extends AppCompatActivity {
             gridview_params2.height = dpToPx(275);
             gridView2.setLayoutParams(gridview_params2);
         }
+
+        //資料庫有資料則顯示
         if (OpenDataBase == 0) {
             ShowData();
         }
@@ -1913,8 +1912,8 @@ public class MyMoneyZeroActivity extends AppCompatActivity {
                 this.AccountPassword = cursor2.getString(0).trim();
             }
             cursor2.close();
-            if (!this.AccountPassword.trim().equals("")) {
-                if (!this.AccountPassword.trim().equals(this.InputPassword.trim()) && !this.AccountPassword.trim().equals("")) {
+            if (!this.AccountPassword.trim().isEmpty()) {
+                if (!this.AccountPassword.trim().equals(this.InputPassword.trim()) && !this.AccountPassword.trim().isEmpty()) {
                     this.DayOutMountView.setText("0");
                     this.MonthOutMountView.setText("0");
                     this.InOutMountView.setText("0");
@@ -2294,6 +2293,7 @@ public class MyMoneyZeroActivity extends AppCompatActivity {
                 }
                 cursor10.close();
             }
+            //可以點選統計收支查看明細
             SimpleAdapter listItemAdapter = new SimpleAdapter(this, listItem, R.layout.maindetailshow, new String[]{"ItemImage", "ItemNote", "ItemNote1", "ItemNote2", "ItemNote3", "ItemNote4", "ItemNote5", "ItemNoteX", "ItemClass", "Mount", "Mount1", "Mount2", "Mount3", "Mount4", "Mount5"}, new int[]{R.id.ItemImage, R.id.ItemNote, R.id.ItemNote1, R.id.ItemNote2, R.id.ItemNote3, R.id.ItemNote4, R.id.ItemNote5, R.id.ItemNoteX, R.id.ItemClass, R.id.Mount, R.id.Mount1, R.id.Mount2, R.id.Mount3, R.id.Mount4, R.id.Mount5});
             this.DataList.setOnItemClickListener(new AdapterView.OnItemClickListener() { // from class: mymoney.zero.MyMoneyZeroActivity.11
                 @Override // android.widget.AdapterView.OnItemClickListener
@@ -2310,13 +2310,13 @@ public class MyMoneyZeroActivity extends AppCompatActivity {
                     Intent intent = new Intent();
                     Bundle bundle = new Bundle();
                     if (ItemNote.getText().toString().trim().equals("本日支出金額")) {
-                        if (!MyMoneyZeroActivity.this.AccountPassword.trim().equals(MyMoneyZeroActivity.this.InputPassword.trim()) && !MyMoneyZeroActivity.this.AccountPassword.trim().equals("")) {
+                        if (!MyMoneyZeroActivity.this.AccountPassword.trim().equals(MyMoneyZeroActivity.this.InputPassword.trim()) && !MyMoneyZeroActivity.this.AccountPassword.trim().isEmpty()) {
                             MyMoneyZeroActivity.this.ShowInputPassword();
                         } else {
                             bundle.putString("DataDay", new GetNowDate().GetDate());
-//                            intent.putExtras(bundle);
-//                            intent.setClass(MyMoneyZeroActivity.this, maindetailshow1.class);
-//                            MyMoneyZeroActivity.this.startActivity(intent);
+                            intent.putExtras(bundle);
+                            intent.setClass(MyMoneyZeroActivity.this, maindetailshow1.class);
+                            MyMoneyZeroActivity.this.startActivity(intent);
                             MyMoneyZeroActivity.this.finish();
                             return;
                         }
@@ -2328,9 +2328,9 @@ public class MyMoneyZeroActivity extends AppCompatActivity {
                             new GetNowDate();
                             bundle.putString("StartDate", MyMoneyZeroActivity.this.WeekStartDate);
                             bundle.putString("EndDate", MyMoneyZeroActivity.this.WeekEndDate);
-//                            intent.putExtras(bundle);
-//                            intent.setClass(MyMoneyZeroActivity.this, maindetailshow2.class);
-//                            MyMoneyZeroActivity.this.startActivity(intent);
+                            intent.putExtras(bundle);
+                            intent.setClass(MyMoneyZeroActivity.this, maindetailshow2.class);
+                            MyMoneyZeroActivity.this.startActivity(intent);
                             MyMoneyZeroActivity.this.finish();
                             return;
                         }
@@ -2341,9 +2341,9 @@ public class MyMoneyZeroActivity extends AppCompatActivity {
                         } else {
                             new GetNowDate();
                             bundle.putString("DataMonth", MyMoneyZeroActivity.this.NowMonthShow.getText().toString().substring(0, 7));
-//                            intent.putExtras(bundle);
-//                            intent.setClass(MyMoneyZeroActivity.this, maindetailshow3.class);
-//                            MyMoneyZeroActivity.this.startActivity(intent);
+                            intent.putExtras(bundle);
+                            intent.setClass(MyMoneyZeroActivity.this, maindetailshow3.class);
+                            MyMoneyZeroActivity.this.startActivity(intent);
                             MyMoneyZeroActivity.this.finish();
                             return;
                         }
@@ -2354,9 +2354,9 @@ public class MyMoneyZeroActivity extends AppCompatActivity {
                         } else {
                             new GetNowDate();
                             bundle.putString("DataMonth", MyMoneyZeroActivity.this.NowMonthShow.getText().toString().substring(0, 7));
-//                            intent.putExtras(bundle);
-//                            intent.setClass(MyMoneyZeroActivity.this, maindetailshow4.class);
-//                            MyMoneyZeroActivity.this.startActivity(intent);
+                            intent.putExtras(bundle);
+                            intent.setClass(MyMoneyZeroActivity.this, maindetailshow4.class);
+                            MyMoneyZeroActivity.this.startActivity(intent);
                             MyMoneyZeroActivity.this.finish();
                             return;
                         }
@@ -2377,9 +2377,9 @@ public class MyMoneyZeroActivity extends AppCompatActivity {
                                 bundle.putString("EndDate", String.valueOf(MyMoneyZeroActivity.this.NowMonthShow.getText().toString().substring(0, 7)) + "/" + String.valueOf(GetMonthEndDay));
                             }
                             bundle.putString("ItemNote", ItemNote.getText().toString().trim());
-//                            intent.putExtras(bundle);
-//                            intent.setClass(MyMoneyZeroActivity.this, maindetailshow5.class);
-//                            MyMoneyZeroActivity.this.startActivity(intent);
+                            intent.putExtras(bundle);
+                            intent.setClass(MyMoneyZeroActivity.this, maindetailshow5.class);
+                            MyMoneyZeroActivity.this.startActivity(intent);
                             MyMoneyZeroActivity.this.finish();
                             return;
                         }
@@ -2392,9 +2392,9 @@ public class MyMoneyZeroActivity extends AppCompatActivity {
                         new GetNowDate();
                         bundle.putString("DataMonth", MyMoneyZeroActivity.this.NowMonthShow.getText().toString().substring(0, 7));
                         bundle.putString("ItemNote", ItemNote.getText().toString().trim());
-//                        intent.putExtras(bundle);
-//                        intent.setClass(MyMoneyZeroActivity.this, maindetailshow6.class);
-//                        MyMoneyZeroActivity.this.startActivity(intent);
+                        intent.putExtras(bundle);
+                        intent.setClass(MyMoneyZeroActivity.this, maindetailshow6.class);
+                        MyMoneyZeroActivity.this.startActivity(intent);
                         MyMoneyZeroActivity.this.finish();
                     }
                 }
