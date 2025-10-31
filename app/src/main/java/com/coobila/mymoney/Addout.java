@@ -3,8 +3,10 @@ package com.coobila.mymoney;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.DatePickerDialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.pm.ActivityInfo;
 import android.database.Cursor;
 import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
@@ -284,7 +286,7 @@ public class Addout extends Activity {
         this.SQL = "SELECT DATA_VALUE FROM SYSTEM_DATA WHERE USER_ID = 'admin' AND ACCOUNT_ID = " + String.valueOf(this.AccountId) + " AND DATA_NOTE = '強制直式顯示'";
         this.cursor = this.DataDB.rawQuery(this.SQL, null);
         if (this.cursor.moveToNext() && this.cursor.getString(0).trim().equals("1")) {
-            setRequestedOrientation(1);
+            setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
         }
         this.cursor.close();
         this.SQL = "SELECT DATA_VALUE FROM SYSTEM_DATA WHERE USER_ID = 'admin' AND ACCOUNT_ID = " + String.valueOf(this.AccountId) + " AND DATA_NOTE = '回到主畫面'";
@@ -583,7 +585,7 @@ public class Addout extends Activity {
         boolean SubItem;
         if (this.ShowVibrate.equals("1")) {
             try {
-                Vibrator vibrator = (Vibrator) getSystemService("vibrator");
+                Vibrator vibrator = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
                 vibrator.vibrate(30L);
             } catch (Exception e) {
             }
@@ -591,7 +593,7 @@ public class Addout extends Activity {
         String SOURCE_ITEM_NOTE = this.SOURCE_ITEM.getSelectedItem().toString();
         String OBJECT_ITEM_NOTE = this.OBJECT_ITEM.getSelectedItem().toString();
         if (SOURCE_ITEM_NOTE.trim().equals(OBJECT_ITEM_NOTE.trim())) {
-            Toast.makeText(this, "提示：來源 與 目的 帳戶不可相同喔!", 0).show();
+            Toast.makeText(this, "提示：來源 與 目的 帳戶不可相同喔!", Toast.LENGTH_SHORT).show();
             return;
         }
         try {
@@ -609,7 +611,7 @@ public class Addout extends Activity {
         this.cursor2.close();
         if (SubItem) {
             this.DataDB.close();
-            Toast.makeText(this, "提示：[" + SOURCE_ITEM_NOTE.trim() + "] 底下尚有設定子項目，您不可使用母項目作為來源項目!!", 0).show();
+            Toast.makeText(this, "提示：[" + SOURCE_ITEM_NOTE.trim() + "] 底下尚有設定子項目，您不可使用母項目作為來源項目!!", Toast.LENGTH_SHORT).show();
             return;
         }
         this.DataDB.close();
@@ -640,7 +642,7 @@ public class Addout extends Activity {
         boolean SubItem;
         if (this.ShowVibrate.equals("1")) {
             try {
-                Vibrator vibrator = (Vibrator) getSystemService("vibrator");
+                Vibrator vibrator = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
                 vibrator.vibrate(30L);
             } catch (Exception e) {
             }
@@ -648,7 +650,7 @@ public class Addout extends Activity {
         String SOURCE_ITEM_NOTE = this.SOURCE_ITEM.getSelectedItem().toString();
         String OBJECT_ITEM_NOTE = this.OBJECT_ITEM.getSelectedItem().toString();
         if (SOURCE_ITEM_NOTE.trim().equals(OBJECT_ITEM_NOTE.trim())) {
-            Toast.makeText(this, "提示：來源 與 目的 帳戶不可相同喔!", 0).show();
+            Toast.makeText(this, "提示：來源 與 目的 帳戶不可相同喔!", Toast.LENGTH_SHORT).show();
             return;
         }
         try {
@@ -666,7 +668,7 @@ public class Addout extends Activity {
         this.cursor2.close();
         if (SubItem) {
             this.DataDB.close();
-            Toast.makeText(this, "提示：[" + SOURCE_ITEM_NOTE.trim() + "] 底下尚有設定子項目，您不可使用母項目作為來源項目!!", 0).show();
+            Toast.makeText(this, "提示：[" + SOURCE_ITEM_NOTE.trim() + "] 底下尚有設定子項目，您不可使用母項目作為來源項目!!", Toast.LENGTH_SHORT).show();
             return;
         }
         this.DataDB.close();
@@ -776,7 +778,7 @@ public class Addout extends Activity {
         this.SQL = "INSERT INTO MYMONEY_DATA (USER_ID,ACCOUNT_ID,MAKE_NO,ITEM_CLASS,DATA_DATE,ITEM_NOTE,IN_MOUNT,OUT_MOUNT,DATA_NOTE,INVOICE_NO,DATA_NO,PAY_COLL_NAME,PROJECT_ID,EXCHANGE,LINK_PC,EXPORT,DATA_NOTE2,DATA_KEY) VALUES ('admin'," + String.valueOf(this.AccountId) + "," + String.valueOf(Make_No) + ",'" + OBJECT_ITEM_CLASS + "','" + SaveDate.trim() + "','" + SAVE_OBJECT_ITEM_NOTE + "',0" + String.valueOf(OBJECT_SaveMount) + ",0,'" + this.DATA_NOTE.getText().toString().trim().replaceAll("'", "''") + "','" + this.INVOICE_NO.getText().toString().trim() + "','2','" + this.PAY_COLL_NAME.getText().toString().trim().replaceAll("'", "''") + "','" + this.PROJECT_ID.getSelectedItem().toString().trim() + "'," + String.valueOf(OBJECT_ITEM_EXCHANGE) + ",'','0','" + this.InputDetail.replaceAll("'", "''") + "','" + DATA_KEY + "')";
         this.DataDB.execSQL(this.SQL);
         this.DataDB.close();
-        Toast.makeText(this, "新增帳務記錄資料完成!", 0).show();
+        Toast.makeText(this, "新增帳務記錄資料完成!", Toast.LENGTH_SHORT).show();
         BackDataToStorage();
         try {
             Intent i = new Intent(getBaseContext(), (Class<?>) MyWidget.class);
@@ -845,7 +847,7 @@ public class Addout extends Activity {
     public void CloseReturn(View CvClick) {
         if (this.ShowVibrate.equals("1")) {
             try {
-                Vibrator vibrator = (Vibrator) getSystemService("vibrator");
+                Vibrator vibrator = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
                 vibrator.vibrate(30L);
             } catch (Exception e) {
             }
@@ -895,7 +897,7 @@ public class Addout extends Activity {
     public void VoiceInput(View CvClick) {
         if (this.ShowVibrate.equals("1")) {
             try {
-                Vibrator vibrator = (Vibrator) getSystemService("vibrator");
+                Vibrator vibrator = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
                 vibrator.vibrate(30L);
             } catch (Exception e) {
             }
@@ -913,7 +915,7 @@ public class Addout extends Activity {
     public void ShowOftenSelect(View CvClick) {
         if (this.ShowVibrate.equals("1")) {
             try {
-                Vibrator vibrator = (Vibrator) getSystemService("vibrator");
+                Vibrator vibrator = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
                 vibrator.vibrate(30L);
             } catch (Exception e) {
             }
@@ -924,7 +926,7 @@ public class Addout extends Activity {
     public void ShowDetailInput(View CvClick) {
         if (this.ShowVibrate.equals("1")) {
             try {
-                Vibrator vibrator = (Vibrator) getSystemService("vibrator");
+                Vibrator vibrator = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
                 vibrator.vibrate(30L);
             } catch (Exception e) {
             }
@@ -956,7 +958,7 @@ public class Addout extends Activity {
     public void ShowCollPalSelect(View CvClick) {
         if (this.ShowVibrate.equals("1")) {
             try {
-                Vibrator vibrator = (Vibrator) getSystemService("vibrator");
+                Vibrator vibrator = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
                 vibrator.vibrate(30L);
             } catch (Exception e) {
             }
