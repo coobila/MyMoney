@@ -6,4 +6,8 @@
     </style>
 
     <style name="Theme.MyMoney" parent="Base.Theme.MyMoney" />
+
+    <style name="ToolbarTitleStyle" parent="TextAppearance.Material3.TitleLarge">
+        <item name="android:textSize">12sp</item>   <!-- 想多大調多大 -->
+    </style>
 </resources>

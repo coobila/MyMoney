@@ -25,6 +25,8 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.google.android.material.appbar.MaterialToolbar;
+
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
@@ -36,6 +38,7 @@ import java.util.Arrays;
 import java.util.Calendar;
 import java.util.HashMap;
 import java.util.Iterator;
+import java.util.Objects;
 
 public class MyMoneyZeroActivity extends AppCompatActivity {
     public static ArrayList<Activity> activityList = new ArrayList<>();
@@ -135,6 +138,10 @@ public class MyMoneyZeroActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         context = getApplicationContext();//給全域變數
         setContentView(R.layout.main);
+
+        MaterialToolbar tb = findViewById(R.id.toolbar);
+        setSupportActionBar(tb);
+
         Log.d("kevin -test----------", "onCreate------------");
         activityList.add(this);
         File dir = getFilesDir();
@@ -280,9 +287,9 @@ public class MyMoneyZeroActivity extends AppCompatActivity {
                 if (!MyMoneyZeroActivity.this.AccountPassword.trim().equals(MyMoneyZeroActivity.this.InputPassword.trim()) && !MyMoneyZeroActivity.this.AccountPassword.trim().equals("")) {
                     MyMoneyZeroActivity.this.ShowInputPassword();
                 } else {
-                    Intent intent1 = new Intent();
-                    intent1.setClass(MyMoneyZeroActivity.this, Addout.class);
-                    MyMoneyZeroActivity.this.startActivity(intent1);
+//                    Intent intent1 = new Intent();
+//                    intent1.setClass(MyMoneyZeroActivity.this, Addout.class);
+//                    MyMoneyZeroActivity.this.startActivity(intent1);
                     MyMoneyZeroActivity.this.finish();
                 }
             }
@@ -320,6 +327,7 @@ public class MyMoneyZeroActivity extends AppCompatActivity {
 //                    MyMoneyZeroActivity.this.finish();
                 }
             }
+            //帳務記錄
             if (item.get("ItemText").equals("帳務記錄")) {
                 if (MyMoneyZeroActivity.this.ShowVibrate.equals("1")) {
                     try {
@@ -332,7 +340,8 @@ public class MyMoneyZeroActivity extends AppCompatActivity {
                     MyMoneyZeroActivity.this.ShowInputPassword();
                 } else {
                     Intent intent14 = new Intent();
-                    String tSDCardPath = Environment.getExternalStorageDirectory().getAbsolutePath();
+//                    String tSDCardPath = Environment.getExternalStorageDirectory().getAbsolutePath();
+                    String tSDCardPath = String.valueOf(getExternalFilesDir(null));
                     try {
                         MyMoneyZeroActivity.this.DataDB = SQLiteDatabase.openDatabase(String.valueOf(tSDCardPath) + "/MyMoneyZero/mymoney.db", null, 0);
                     } catch (Exception e5) {
@@ -341,15 +350,16 @@ public class MyMoneyZeroActivity extends AppCompatActivity {
                     Cursor cursor = MyMoneyZeroActivity.this.DataDB.rawQuery(MyMoneyZeroActivity.this.SQL, null);
                     if (cursor.moveToNext() && cursor.getString(0).trim().endsWith("1")) {
                         cursor.close();
-//                        intent14.setClass(MyMoneyZeroActivity.this, DayInOutShow2.class);
+                        intent14.setClass(MyMoneyZeroActivity.this, DayInOutShow2.class);
                     } else {
                         cursor.close();
-//                        intent14.setClass(MyMoneyZeroActivity.this, DayInOutShow.class);
+                        intent14.setClass(MyMoneyZeroActivity.this, DayInOutShow.class);
                     }
                     MyMoneyZeroActivity.this.startActivity(intent14);
                     MyMoneyZeroActivity.this.finish();
                 }
             }
+            //統計報表
             if (item.get("ItemText").equals("統計報表")) {
                 if (MyMoneyZeroActivity.this.ShowVibrate.equals("1")) {
                     try {
@@ -367,6 +377,7 @@ public class MyMoneyZeroActivity extends AppCompatActivity {
 //                    MyMoneyZeroActivity.this.finish();
                 }
             }
+
             if (item.get("ItemText").equals("系統設定")) {
                 if (MyMoneyZeroActivity.this.ShowVibrate.equals("1")) {
                     try {
@@ -469,7 +480,8 @@ public class MyMoneyZeroActivity extends AppCompatActivity {
 
     public void ExitProg() throws IOException, SQLException {
         try {
-            String tSDCardPath = Environment.getExternalStorageDirectory().getAbsolutePath();
+//            String tSDCardPath = Environment.getExternalStorageDirectory().getAbsolutePath();
+            String tSDCardPath = String.valueOf(getExternalFilesDir(null));
             this.DataDB = SQLiteDatabase.openDatabase(String.valueOf(tSDCardPath) + "/MyMoneyZero/mymoney.db", null, 0);
         } catch (Exception e) {
         }
@@ -509,7 +521,8 @@ public class MyMoneyZeroActivity extends AppCompatActivity {
 
     public void BackDatabase() throws IOException {
         copyDBtoSDCard();
-        String tSDCardPath = String.valueOf(Environment.getExternalStorageDirectory().getAbsolutePath()) + "/MyMoneyZero/DataBack/";
+//        String tSDCardPath = String.valueOf(Environment.getExternalStorageDirectory().getAbsolutePath()) + "/MyMoneyZero/DataBack/";
+        String tSDCardPath = String.valueOf(getExternalFilesDir(null));
         File tDataPath = new File(tSDCardPath);
         try {
             tDataPath.mkdirs();
@@ -1368,14 +1381,15 @@ public class MyMoneyZeroActivity extends AppCompatActivity {
                     CheckSerial Serial = new CheckSerial();
                     if (Serial.GetInputSerial()) {
                         if (this.AccountId > 0.0d) {
-                            setTitle("帳務小管家ZERO v4.7(專業版) - " + this.AccountName);
+                            this.setTitle("帳務小管家ZERO v4.7(專業版) - " + this.AccountName);
                         } else {
-                            setTitle("帳務小管家ZERO v4.7(專業版) - 未選擇作業的帳本");
+                            this.setTitle("帳務小管家ZERO v4.7(專業版) - 未選擇作業的帳本");
                         }
                     } else if (this.AccountId > 0.0d) {
-                        setTitle("帳務小管家ZERO v4.7 - " + this.AccountName);
+                        Objects.requireNonNull(getSupportActionBar()).setTitle("帳務小管家ZERO v4.7 - " + this.AccountName);
+//                        this.setTitle("帳務小管家ZERO v4.7 - " + this.AccountName);
                     } else {
-                        setTitle("帳務小管家ZERO v4.7 - 未選擇作業的帳本");
+                        this.setTitle("帳務小管家ZERO v4.7 - 未選擇作業的帳本");
                     }
                     return 0;
                 } catch (Exception e20) {
@@ -1459,7 +1473,8 @@ public class MyMoneyZeroActivity extends AppCompatActivity {
                     String NowMonth = c.GetDate().substring(0, 7);
                     String NowDay = c.GetDate();
                     try {
-                        String tSDCardPath = Environment.getExternalStorageDirectory().getAbsolutePath();
+//                        String tSDCardPath = Environment.getExternalStorageDirectory().getAbsolutePath();
+                        String tSDCardPath = String.valueOf(getExternalFilesDir(null));
                         MyMoneyZeroActivity.this.DataDB = SQLiteDatabase.openDatabase(String.valueOf(tSDCardPath) + "/MyMoneyZero/mymoney.db", null, 0);
                     } catch (Exception e) {
                     }
@@ -1510,7 +1525,8 @@ public class MyMoneyZeroActivity extends AppCompatActivity {
                     return;
                 }
                 try {
-                    String tSDCardPath2 = Environment.getExternalStorageDirectory().getAbsolutePath();
+//                    String tSDCardPath2 = Environment.getExternalStorageDirectory().getAbsolutePath();
+                    String tSDCardPath2 = String.valueOf(getExternalFilesDir(null));
                     MyMoneyZeroActivity.this.DataDB = SQLiteDatabase.openDatabase(String.valueOf(tSDCardPath2) + "/MyMoneyZero/mymoney.db", null, 0);
                 } catch (Exception e3) {
                 }
@@ -1710,7 +1726,8 @@ public class MyMoneyZeroActivity extends AppCompatActivity {
             @Override // android.content.DialogInterface.OnClickListener
             public void onClick(DialogInterface dialog, int which) throws SQLException {
                 try {
-                    String tSDCardPath = Environment.getExternalStorageDirectory().getAbsolutePath();
+//                    String tSDCardPath = Environment.getExternalStorageDirectory().getAbsolutePath();
+                    String tSDCardPath = String.valueOf(getExternalFilesDir(null));
                     MyMoneyZeroActivity.this.DataDB = SQLiteDatabase.openDatabase(String.valueOf(tSDCardPath) + "/MyMoneyZero/mymoney.db", null, 0);
                 } catch (Exception e2) {
                 }
@@ -1773,7 +1790,8 @@ public class MyMoneyZeroActivity extends AppCompatActivity {
         File dir = getFilesDir();
         String DataFileDir = dir.getPath();
         try {
-            String tSDCardPath = Environment.getExternalStorageDirectory().getAbsolutePath();
+//            String tSDCardPath = Environment.getExternalStorageDirectory().getAbsolutePath();
+            String tSDCardPath = String.valueOf(getExternalFilesDir(null));
             File tDataPath = new File(String.valueOf(tSDCardPath) + "/MyMoneyZero/");
             String tDBFilePath = tDataPath + "/mymoney.db";
             File tFile = new File(tDBFilePath);
@@ -1840,7 +1858,8 @@ public class MyMoneyZeroActivity extends AppCompatActivity {
                     return super.onKeyUp(keyCode, event);
                 }
                 try {
-                    String tSDCardPath = Environment.getExternalStorageDirectory().getAbsolutePath();
+//                    String tSDCardPath = Environment.getExternalStorageDirectory().getAbsolutePath();
+                    String tSDCardPath = String.valueOf(getExternalFilesDir(null));
                     this.DataDB = SQLiteDatabase.openDatabase(String.valueOf(tSDCardPath) + "/MyMoneyZero/mymoney.db", null, 0);
                 } catch (Exception e) {
                 }
@@ -1892,7 +1911,8 @@ public class MyMoneyZeroActivity extends AppCompatActivity {
         this.DataList = (ListView) findViewById(R.id.DataList);
         DecimalFormat MountDf = new DecimalFormat("#,##0" + this.MountFormat);
         try {
-            String tSDCardPath = Environment.getExternalStorageDirectory().getAbsolutePath();
+//            String tSDCardPath = Environment.getExternalStorageDirectory().getAbsolutePath();
+            String tSDCardPath = String.valueOf(getExternalFilesDir(null));
             this.DataDB = SQLiteDatabase.openDatabase(String.valueOf(tSDCardPath) + "/MyMoneyZero/mymoney.db", null, 0);
         } catch (Exception e) {
         }
@@ -2314,9 +2334,9 @@ public class MyMoneyZeroActivity extends AppCompatActivity {
                             MyMoneyZeroActivity.this.ShowInputPassword();
                         } else {
                             bundle.putString("DataDay", new GetNowDate().GetDate());
-                            intent.putExtras(bundle);
-                            intent.setClass(MyMoneyZeroActivity.this, maindetailshow1.class);
-                            MyMoneyZeroActivity.this.startActivity(intent);
+//                            intent.putExtras(bundle);
+//                            intent.setClass(MyMoneyZeroActivity.this, maindetailshow1.class);
+//                            MyMoneyZeroActivity.this.startActivity(intent);
                             MyMoneyZeroActivity.this.finish();
                             return;
                         }
@@ -2328,9 +2348,9 @@ public class MyMoneyZeroActivity extends AppCompatActivity {
                             new GetNowDate();
                             bundle.putString("StartDate", MyMoneyZeroActivity.this.WeekStartDate);
                             bundle.putString("EndDate", MyMoneyZeroActivity.this.WeekEndDate);
-                            intent.putExtras(bundle);
-                            intent.setClass(MyMoneyZeroActivity.this, maindetailshow2.class);
-                            MyMoneyZeroActivity.this.startActivity(intent);
+//                            intent.putExtras(bundle);
+//                            intent.setClass(MyMoneyZeroActivity.this, maindetailshow2.class);
+//                            MyMoneyZeroActivity.this.startActivity(intent);
                             MyMoneyZeroActivity.this.finish();
                             return;
                         }
@@ -2341,9 +2361,9 @@ public class MyMoneyZeroActivity extends AppCompatActivity {
                         } else {
                             new GetNowDate();
                             bundle.putString("DataMonth", MyMoneyZeroActivity.this.NowMonthShow.getText().toString().substring(0, 7));
-                            intent.putExtras(bundle);
-                            intent.setClass(MyMoneyZeroActivity.this, maindetailshow3.class);
-                            MyMoneyZeroActivity.this.startActivity(intent);
+//                            intent.putExtras(bundle);
+//                            intent.setClass(MyMoneyZeroActivity.this, maindetailshow3.class);
+//                            MyMoneyZeroActivity.this.startActivity(intent);
                             MyMoneyZeroActivity.this.finish();
                             return;
                         }
@@ -2354,9 +2374,9 @@ public class MyMoneyZeroActivity extends AppCompatActivity {
                         } else {
                             new GetNowDate();
                             bundle.putString("DataMonth", MyMoneyZeroActivity.this.NowMonthShow.getText().toString().substring(0, 7));
-                            intent.putExtras(bundle);
-                            intent.setClass(MyMoneyZeroActivity.this, maindetailshow4.class);
-                            MyMoneyZeroActivity.this.startActivity(intent);
+//                            intent.putExtras(bundle);
+//                            intent.setClass(MyMoneyZeroActivity.this, maindetailshow4.class);
+//                            MyMoneyZeroActivity.this.startActivity(intent);
                             MyMoneyZeroActivity.this.finish();
                             return;
                         }
@@ -2377,9 +2397,9 @@ public class MyMoneyZeroActivity extends AppCompatActivity {
                                 bundle.putString("EndDate", String.valueOf(MyMoneyZeroActivity.this.NowMonthShow.getText().toString().substring(0, 7)) + "/" + String.valueOf(GetMonthEndDay));
                             }
                             bundle.putString("ItemNote", ItemNote.getText().toString().trim());
-                            intent.putExtras(bundle);
-                            intent.setClass(MyMoneyZeroActivity.this, maindetailshow5.class);
-                            MyMoneyZeroActivity.this.startActivity(intent);
+//                            intent.putExtras(bundle);
+//                            intent.setClass(MyMoneyZeroActivity.this, maindetailshow5.class);
+//                            MyMoneyZeroActivity.this.startActivity(intent);
                             MyMoneyZeroActivity.this.finish();
                             return;
                         }
@@ -2392,9 +2412,9 @@ public class MyMoneyZeroActivity extends AppCompatActivity {
                         new GetNowDate();
                         bundle.putString("DataMonth", MyMoneyZeroActivity.this.NowMonthShow.getText().toString().substring(0, 7));
                         bundle.putString("ItemNote", ItemNote.getText().toString().trim());
-                        intent.putExtras(bundle);
-                        intent.setClass(MyMoneyZeroActivity.this, maindetailshow6.class);
-                        MyMoneyZeroActivity.this.startActivity(intent);
+//                        intent.putExtras(bundle);
+//                        intent.setClass(MyMoneyZeroActivity.this, maindetailshow6.class);
+//                        MyMoneyZeroActivity.this.startActivity(intent);
                         MyMoneyZeroActivity.this.finish();
                     }
                 }

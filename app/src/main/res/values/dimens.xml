@@ -1,3 +1,26 @@
 <resources>
-    <dimen name="fab_margin">16dp</dimen>
+    <dimen name="ScrollViewHeight">790px</dimen>
+    <dimen name="DayInOutShowHeight">790px</dimen>
+    <dimen name="ReportViewHeight">642px</dimen>
+    <dimen name="AccountSelectHeight">770px</dimen>
+    <dimen name="ItemSetHeight">690px</dimen>
+    <dimen name="OftenNoteHeight">745px</dimen>
+    <dimen name="CollPayNameHeight">760px</dimen>
+    <dimen name="ProjectSetHeight">760px</dimen>
+    <dimen name="AccountSetHeight">760px</dimen>
+    <dimen name="InvoiceCheckHeight">765px</dimen>
+    <dimen name="Report01Height">760px</dimen>
+    <dimen name="Report02Height">723px</dimen>
+    <dimen name="Report03Height">723px</dimen>
+    <dimen name="Report04Height">723px</dimen>
+    <dimen name="Report05Height">723px</dimen>
+    <dimen name="Report06Height">793px</dimen>
+    <dimen name="Report07Height">690px</dimen>
+    <dimen name="Report10Height">790px</dimen>
+    <dimen name="Report11Height">723px</dimen>
+    <dimen name="Report12Height">723px</dimen>
+    <dimen name="Report13Height">790px</dimen>
+    <dimen name="Report14Height">793px</dimen>
+    <dimen name="Report15Height">793px</dimen>
+    <dimen name="CalcButtonHeight">70dp</dimen>
 </resources>

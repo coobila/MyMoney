@@ -1,10 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     android:background="@drawable/mainback"
     android:visibility="visible"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
+    <com.google.android.material.appbar.MaterialToolbar
+        android:id="@+id/toolbar"
+        android:layout_height="35dp"
+        android:layout_width="match_parent"
+        android:background="?attr/colorPrimary"
+        app:titleTextAppearance="@style/ToolbarTitleStyle"
+        android:theme="?attr/actionBarTheme" />
     <TableLayout
         android:gravity="center_horizontal"
         android:id="@+id/tableLayout0"
