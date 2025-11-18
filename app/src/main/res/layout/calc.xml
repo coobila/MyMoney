@@ -20,6 +20,7 @@
                 android:id="@+id/Mount"
                 android:layout_width="308dp"
                 android:layout_height="60dp"
+                android:inputType="number"
                 android:text="0"
                 android:background="@drawable/custom_edittext_background"/>
         </TableRow>
