@@ -36,7 +36,8 @@ public class Calc extends Activity {
         setTitle("帳務小管家ZERO");
         this.AccountId += 0.0d;
         try {
-            String tSDCardPath = Environment.getExternalStorageDirectory().getAbsolutePath();
+//            String tSDCardPath = Environment.getExternalStorageDirectory().getAbsolutePath();
+            String tSDCardPath = String.valueOf(getExternalFilesDir(null));
             this.DataDB = SQLiteDatabase.openDatabase(String.valueOf(tSDCardPath) + "/MyMoneyZero/mymoney.db", null, 0);
         } catch (Exception e) {
         }
@@ -512,7 +513,8 @@ public class Calc extends Activity {
         }
         TempMount2 = TempMount2.replaceAll("/", "*1.0/");
         try {
-            String tSDCardPath = Environment.getExternalStorageDirectory().getAbsolutePath();
+//            String tSDCardPath = Environment.getExternalStorageDirectory().getAbsolutePath();
+            String tSDCardPath = String.valueOf(getExternalFilesDir(null));
             this.DataDB = SQLiteDatabase.openDatabase(String.valueOf(tSDCardPath) + "/MyMoneyZero/mymoney.db", null, 0);
             this.SQL = "SELECT DATA_VALUE FROM SYSTEM_DATA WHERE USER_ID = 'admin' AND DATA_NOTE = '使用帳本'";
             this.cursor = this.DataDB.rawQuery(this.SQL, null);

@@ -32,7 +32,8 @@ public class Calc2 extends Activity {
         setTitle("帳務小管家ZERO");
         this.AccountId += 0.0d;
         try {
-            String tSDCardPath = Environment.getExternalStorageDirectory().getAbsolutePath();
+//            String tSDCardPath = Environment.getExternalStorageDirectory().getAbsolutePath();
+            String tSDCardPath = String.valueOf(getExternalFilesDir(null));
             this.DataDB = SQLiteDatabase.openDatabase(String.valueOf(tSDCardPath) + "/MyMoneyZero/mymoney.db", null, 0);
         } catch (Exception e) {
         }

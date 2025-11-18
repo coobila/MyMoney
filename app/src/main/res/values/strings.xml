@@ -1,7 +1,7 @@
 <resources>
     <string name="hello">Hello World, MyMoneyZeroActivity!</string>
-    <string name="app_name">帳務小管家ZERO</string>
-    <string name="ProgName">帳務小管家ZERO</string>
+    <string name="app_name">記帳</string>
+    <string name="ProgName">記帳</string>
     <!-- Strings used for fragments for navigation -->
     <string name="first_fragment_label">First Fragment</string>
     <string name="second_fragment_label">Second Fragment</string>

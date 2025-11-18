@@ -1,15 +1,18 @@
 package com.coobila.mymoney;
 
 import static android.widget.Toast.*;
+
 import android.app.Activity;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.ActivityInfo;
 import android.content.res.Configuration;
 import android.database.Cursor;
 import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
 import android.os.Vibrator;
@@ -21,9 +24,16 @@ import android.view.Menu;
 import android.view.View;
 import android.widget.*;
 
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.graphics.Insets;
+import androidx.core.view.ViewCompat;
+import androidx.core.view.WindowInsetsCompat;
+import androidx.documentfile.provider.DocumentFile;
 
 import com.google.android.material.appbar.MaterialToolbar;
 
@@ -31,6 +41,9 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
+import java.nio.channels.FileChannel;
 import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -81,7 +94,18 @@ public class MyMoneyZeroActivity extends AppCompatActivity {
     boolean LockShowAdLocus = false;
     int EndCountStyle = 0;
 
+    //My
     private static Context context;
+
+    private static final int REQUEST_CODE_OPEN_DOCUMENT_TREE = 1001;
+    private static final String PREFS_NAME = "sdaf_prefs";
+    private static final String KEY_TREE_URI = "tree_uri";
+
+    private Uri treeUri = null;
+    private DocumentFile pickedDir = null;
+    private DocumentFile defaultFolder = null;
+    private static final int REQUEST_CODE_PICK_FILE = 1001;
+    private File appDBPath;
 
     //建立並顯示 Activity 頂部的選項選單
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -92,7 +116,7 @@ public class MyMoneyZeroActivity extends AppCompatActivity {
             } catch (Exception e) {
             }
         }
-        if (!this.AccountPassword.trim().equals(this.InputPassword.trim()) && !this.AccountPassword.trim().equals("")) {
+        if (!this.AccountPassword.trim().equals(this.InputPassword.trim()) && !this.AccountPassword.trim().isEmpty()) {
             ShowInputPassword();
         } else {
             makeText(this, "系統訊息：程式更新調整中，此功能暫時停止使用!", LENGTH_LONG).show();
@@ -139,12 +163,23 @@ public class MyMoneyZeroActivity extends AppCompatActivity {
         context = getApplicationContext();//給全域變數
         setContentView(R.layout.main);
 
+//        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
+//            Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
+//            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
+//            return insets;
+//        });
+
         MaterialToolbar tb = findViewById(R.id.toolbar);
         setSupportActionBar(tb);
 
         Log.d("kevin -test----------", "onCreate------------");
         activityList.add(this);
-        File dir = getFilesDir();
+//        File dir = getFilesDir();
+
+        exportDB(this);
+
+//        appDBPath = new File(getExternalFilesDir(null) + "/MyMoneyZero/mymoney.db");
+        chooseFileToImport();
 
         //判斷有無資料庫
         int OpenDataBase = 0;
@@ -264,6 +299,62 @@ public class MyMoneyZeroActivity extends AppCompatActivity {
         }
     }
 
+    // ----------------------------- 匯出 DB -----------------------------
+    private void exportDB(Context c) {
+        try {
+            File sd = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS);
+            File data = c.getExternalFilesDir(null);
+
+            File src = new File(data + "/MyMoneyZero/mymoney.db");
+            File dst = new File(sd, "mymoney.db");
+
+            FileChannel inChannel = new FileInputStream(src).getChannel();
+            FileChannel outChannel = new FileOutputStream(dst).getChannel();
+            outChannel.transferFrom(inChannel, 0, inChannel.size());
+            inChannel.close();
+            outChannel.close();
+        } catch (Exception e) { e.printStackTrace(); }
+    }
+
+    // ----------------------------- 匯入 DB -----------------------------
+    private void importDB(Uri uri) {
+        try {
+            InputStream in = getContentResolver().openInputStream(uri);
+            OutputStream out = new FileOutputStream(appDBPath);
+
+            byte[] buffer = new byte[1024];
+            int length;
+            while ((length = in.read(buffer)) > 0) {
+                out.write(buffer, 0, length);
+            }
+
+            in.close();
+            out.close();
+
+            Toast.makeText(this, "匯入成功！請重新啟動 App", Toast.LENGTH_LONG).show();
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            Toast.makeText(this, "匯入失敗：" + e.getMessage(), Toast.LENGTH_LONG).show();
+        }
+    }
+
+    // 使用 SAF 選擇要匯入的 DB
+    private void chooseFileToImport() {
+        Intent intent = new Intent(Intent.ACTION_OPEN_DOCUMENT);
+        intent.setType("*/*");
+        filePickerLauncher.launch(intent);
+    }
+
+    private final ActivityResultLauncher<Intent> filePickerLauncher =
+            registerForActivityResult(new ActivityResultContracts.StartActivityForResult(),
+                    result -> {
+                        if (result.getResultCode() == Activity.RESULT_OK) {
+                            Uri uri = result.getData().getData();
+                            importDB(uri);
+                        }
+                    });
+
     private int dpToPx(int dp) {
         float density = getApplicationContext().getResources().getDisplayMetrics().density;
         return Math.round(dp * density);
@@ -287,9 +378,9 @@ public class MyMoneyZeroActivity extends AppCompatActivity {
                 if (!MyMoneyZeroActivity.this.AccountPassword.trim().equals(MyMoneyZeroActivity.this.InputPassword.trim()) && !MyMoneyZeroActivity.this.AccountPassword.trim().equals("")) {
                     MyMoneyZeroActivity.this.ShowInputPassword();
                 } else {
-//                    Intent intent1 = new Intent();
-//                    intent1.setClass(MyMoneyZeroActivity.this, Addout.class);
-//                    MyMoneyZeroActivity.this.startActivity(intent1);
+                    Intent intent1 = new Intent();
+                    intent1.setClass(MyMoneyZeroActivity.this, Addout.class);
+                    MyMoneyZeroActivity.this.startActivity(intent1);
                     MyMoneyZeroActivity.this.finish();
                 }
             }
@@ -304,10 +395,10 @@ public class MyMoneyZeroActivity extends AppCompatActivity {
                 if (!MyMoneyZeroActivity.this.AccountPassword.trim().equals(MyMoneyZeroActivity.this.InputPassword.trim()) && !MyMoneyZeroActivity.this.AccountPassword.trim().equals("")) {
                     MyMoneyZeroActivity.this.ShowInputPassword();
                 } else {
-//                    Intent intent12 = new Intent();
-//                    intent12.setClass(MyMoneyZeroActivity.this, Addin.class);
-//                    MyMoneyZeroActivity.this.startActivity(intent12);
-//                    MyMoneyZeroActivity.this.finish();
+                    Intent intent12 = new Intent();
+                    intent12.setClass(MyMoneyZeroActivity.this, Addin.class);
+                    MyMoneyZeroActivity.this.startActivity(intent12);
+                    MyMoneyZeroActivity.this.finish();
                 }
             }
             if (item.get("ItemText").equals("資產轉帳")) {
@@ -321,10 +412,10 @@ public class MyMoneyZeroActivity extends AppCompatActivity {
                 if (!MyMoneyZeroActivity.this.AccountPassword.trim().equals(MyMoneyZeroActivity.this.InputPassword.trim()) && !MyMoneyZeroActivity.this.AccountPassword.trim().equals("")) {
                     MyMoneyZeroActivity.this.ShowInputPassword();
                 } else {
-//                    Intent intent13 = new Intent();
-//                    intent13.setClass(MyMoneyZeroActivity.this, Addtransfer.class);
-//                    MyMoneyZeroActivity.this.startActivity(intent13);
-//                    MyMoneyZeroActivity.this.finish();
+                    Intent intent13 = new Intent();
+                    intent13.setClass(MyMoneyZeroActivity.this, Addtransfer.class);
+                    MyMoneyZeroActivity.this.startActivity(intent13);
+                    MyMoneyZeroActivity.this.finish();
                 }
             }
             //帳務記錄
@@ -371,10 +462,10 @@ public class MyMoneyZeroActivity extends AppCompatActivity {
                 if (!MyMoneyZeroActivity.this.AccountPassword.trim().equals(MyMoneyZeroActivity.this.InputPassword.trim()) && !MyMoneyZeroActivity.this.AccountPassword.trim().equals("")) {
                     MyMoneyZeroActivity.this.ShowInputPassword();
                 } else {
-//                    Intent intent15 = new Intent();
-//                    intent15.setClass(MyMoneyZeroActivity.this, ReportView.class);
-//                    MyMoneyZeroActivity.this.startActivity(intent15);
-//                    MyMoneyZeroActivity.this.finish();
+                    Intent intent15 = new Intent();
+                    intent15.setClass(MyMoneyZeroActivity.this, ReportView.class);
+                    MyMoneyZeroActivity.this.startActivity(intent15);
+                    MyMoneyZeroActivity.this.finish();
                 }
             }
 
@@ -419,13 +510,13 @@ public class MyMoneyZeroActivity extends AppCompatActivity {
                 if (!MyMoneyZeroActivity.this.AccountPassword.trim().equals(MyMoneyZeroActivity.this.InputPassword.trim()) && !MyMoneyZeroActivity.this.AccountPassword.trim().equals("")) {
                     MyMoneyZeroActivity.this.ShowInputPassword();
                 } else {
-//                    Intent intent = new Intent();
-//                    Bundle bundle = new Bundle();
-//                    bundle.putString("ITEM_CLASS", "資產");
-//                    intent.putExtras(bundle);
-//                    intent.setClass(MyMoneyZeroActivity.this, ItemSet.class);
-//                    MyMoneyZeroActivity.this.startActivity(intent);
-//                    MyMoneyZeroActivity.this.finish();
+                    Intent intent = new Intent();
+                    Bundle bundle = new Bundle();
+                    bundle.putString("ITEM_CLASS", "資產");
+                    intent.putExtras(bundle);
+                    intent.setClass(MyMoneyZeroActivity.this, ItemSet.class);
+                    MyMoneyZeroActivity.this.startActivity(intent);
+                    MyMoneyZeroActivity.this.finish();
                 }
             }
             if (item.get("ItemText").equals("結束離開")) {
@@ -553,6 +644,7 @@ public class MyMoneyZeroActivity extends AppCompatActivity {
         double NowMount2;
         this.MonthInMount += 0.0d;
         double d = 0.0d + 0.0d;
+
         // 取得外部儲存路徑
 //        String tSDCardPath = Environment.getExternalStorageDirectory().getAbsolutePath();
         String tSDCardPath = String.valueOf(getExternalFilesDir(null));
@@ -631,7 +723,8 @@ public class MyMoneyZeroActivity extends AppCompatActivity {
                     this.DataDB.close();
                 }
             } else {
-                File tDataPath2 = new File(String.valueOf(tSDCardPath) + "/MyMoneyZero/");
+//                File tDataPath2 = new File(String.valueOf(tSDCardPath) + "/MyMoneyZero/");
+                File tDataPath2 = new File(getExternalFilesDir(null), "MyMoneyZero");
                 String tDBFilePath = tDataPath2 + "/mymoney.db";
                 File tFile = new File(tDBFilePath);
                 if (!tFile.exists()) {
@@ -658,6 +751,22 @@ public class MyMoneyZeroActivity extends AppCompatActivity {
         } catch (Exception e3) {
         }
         try {
+
+//            File tDataPath = new File(getExternalFilesDir(null), "MyMoneyZero");
+//            File file = new File(tDataPath, "mymoney.db");
+//            try (InputStream in = getContentResolver().openInputStream(treeUri);
+//                 OutputStream out = new FileOutputStream(file)) {
+//                byte[] buf = new byte[8192];
+//                int len;
+//                while ((len = in.read(buf)) > 0) {
+//                    out.write(buf, 0, len);
+//                }
+//            } catch (IOException e) {
+//                e.printStackTrace();
+//            }
+//            file.setWritable(true,true);
+//            file.setReadable(true,true);
+//            this.DataDB = SQLiteDatabase.openDatabase(file.getAbsolutePath(), null, SQLiteDatabase.OPEN_READWRITE | SQLiteDatabase.CREATE_IF_NECESSARY);
             this.DataDB = SQLiteDatabase.openDatabase(String.valueOf(tSDCardPath) + "/MyMoneyZero/mymoney.db", null, 0);
             try {
                 this.SQL = "ALTER TABLE MYMONEY_DATA ADD PC_MAKE_NO DOUBLE";
@@ -1475,7 +1584,7 @@ public class MyMoneyZeroActivity extends AppCompatActivity {
                     try {
 //                        String tSDCardPath = Environment.getExternalStorageDirectory().getAbsolutePath();
                         String tSDCardPath = String.valueOf(getExternalFilesDir(null));
-                        MyMoneyZeroActivity.this.DataDB = SQLiteDatabase.openDatabase(String.valueOf(tSDCardPath) + "/MyMoneyZero/mymoney.db", null, 0);
+                        MyMoneyZeroActivity.this.DataDB = SQLiteDatabase.openDatabase(String.valueOf(tSDCardPath) + "/MyMoneyZero/mymoney.db", null, SQLiteDatabase.OPEN_READWRITE | SQLiteDatabase.CREATE_IF_NECESSARY);
                     } catch (Exception e) {
                     }
                     try {
@@ -1585,10 +1694,10 @@ public class MyMoneyZeroActivity extends AppCompatActivity {
             ShowInputPassword();
             return;
         }
-//        Intent intent1 = new Intent();
-//        intent1.setClass(this, Addout.class);
-//        startActivity(intent1);
-//        finish();
+        Intent intent1 = new Intent();
+        intent1.setClass(this, Addout.class);
+        startActivity(intent1);
+        finish();
     }
 
     public void ShowAddIn(View CvClick) {
@@ -2427,11 +2536,13 @@ public class MyMoneyZeroActivity extends AppCompatActivity {
     }
 
     public void CreateDatabase2() throws SQLException {
-        String tSDCardPath = Environment.getExternalStorageDirectory().getAbsolutePath();
+//        String tSDCardPath = Environment.getExternalStorageDirectory().getAbsolutePath();
+        String tSDCardPath = String.valueOf(getExternalFilesDir(null));
         try {
             ///storage/emulated/0/Android/data/com.coobila.mymoney/files/mymoney.db
 //            this.DataDB = SQLiteDatabase.openOrCreateDatabase(String.valueOf(tSDCardPath) + "/MyMoneyZero/mymoney.db", (SQLiteDatabase.CursorFactory) null);
-            this.DataDB = SQLiteDatabase.openOrCreateDatabase("storage/emulated/0/Android/data/com.coobila.mymoney/files/mymoney.db", (SQLiteDatabase.CursorFactory) null);
+//            this.DataDB = SQLiteDatabase.openOrCreateDatabase("storage/emulated/0/Android/data/com.coobila.mymoney/files/mymoney.db", (SQLiteDatabase.CursorFactory) null);
+            this.DataDB = SQLiteDatabase.openOrCreateDatabase(tSDCardPath + "/MyMoneyZero/mymoney.db", (SQLiteDatabase.CursorFactory) null);
         } catch (Exception e) {
         }
         this.SQL = "CREATE TABLE PROJECT_SET(USER_ID char(20) not null,ACCOUNT_ID int,PROJECT_ID char(20),PROJECT_NOTE char(40))";

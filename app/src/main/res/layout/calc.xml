@@ -20,7 +20,8 @@
                 android:id="@+id/Mount"
                 android:layout_width="308dp"
                 android:layout_height="60dp"
-                android:text="0"/>
+                android:text="0"
+                android:background="@drawable/custom_edittext_background"/>
         </TableRow>
         <TableLayout
             android:id="@+id/tableLayout2"

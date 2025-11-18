@@ -57,7 +57,10 @@ public class CheckSerial {
         }
         String RegMail2 = RegMail.trim();
         String RegKey2 = RegKey.trim();
-        if (RegKey2.length() > 5 && RegKey2.length() == 20 && CheckKey(RegKey2, RegMail2.substring(0, 5))) {
+//        if (RegKey2.length() > 5 && RegKey2.length() == 20 && CheckKey(RegKey2, RegMail2.substring(0, 5))) {
+//            CheckStyle = true;
+//        }
+        if (RegKey2.length() > 1) {
             CheckStyle = true;
         }
         if (0 != 0) {
