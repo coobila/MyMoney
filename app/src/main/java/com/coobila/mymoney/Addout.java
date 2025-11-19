@@ -8,17 +8,22 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.database.Cursor;
+import android.database.DataSetObserver;
 import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Environment;
 import android.os.Vibrator;
 import android.text.method.NumberKeyListener;
+import android.view.Gravity;
 import android.view.KeyEvent;
 import android.view.MotionEvent;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
@@ -39,6 +44,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Calendar;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -465,10 +471,20 @@ public class Addout extends AppCompatActivity {
             this.cursor2.close();
         }
         this.cursor.close();
+//        ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, allCountries);
+//        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+//        this.SOURCE_ITEM = (Spinner) findViewById(R.id.SOURCE_ITEM);
+//        this.SOURCE_ITEM.setAdapter((SpinnerAdapter) adapter);
+
+        ArrayList planets = new ArrayList(Arrays.asList(allCountries));
+        CustomSpinnerAdapter customSpinnerAdapter=new CustomSpinnerAdapter(this, planets);
+        this.SOURCE_ITEM.setAdapter(customSpinnerAdapter);
+
         ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, allCountries);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         this.SOURCE_ITEM = (Spinner) findViewById(R.id.SOURCE_ITEM);
         this.SOURCE_ITEM.setAdapter((SpinnerAdapter) adapter);
+
         ArrayAdapter<String> adapterv = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, allCountriesv);
         adapterv.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         this.VSOURCE_ITEM = (Spinner) findViewById(R.id.VSOURCE_ITEM);
@@ -1322,5 +1338,79 @@ public class Addout extends AppCompatActivity {
                 }
         }
         return super.onKeyDown(keyCode, event);
+    }
+
+    public class CustomSpinnerAdapter extends BaseAdapter implements SpinnerAdapter {
+        private final Context ctx;
+        private ArrayList<String> items;
+
+        public CustomSpinnerAdapter(Context ctx, ArrayList<String> items) {
+            this.items = items;
+            this.ctx = ctx;
+        }
+
+        public int getCount() {
+            return items.size();
+        }
+
+        public Object getItem(int i) {
+            return items.get(i);
+        }
+
+        public long getItemId(int i) {
+            return (long)i;
+        }
+
+        @Override
+        public int getItemViewType(int position) {
+            return 0;
+        }
+
+        @Override
+        public View getDropDownView(int position, View convertView, ViewGroup parent) {
+            TextView txt = new TextView(ctx);
+            txt.setPadding(16, 16, 16, 16);
+            txt.setTextSize(18);
+            txt.setGravity(Gravity.CENTER_VERTICAL);
+            txt.setText(items.get(position));
+            txt.setTextColor(Color.parseColor("#000000"));
+            return  txt;
+        }
+
+        public View getView(int i, View view, ViewGroup viewgroup) {
+            TextView txt = new TextView(ctx);
+            txt.setGravity(Gravity.CENTER);
+            txt.setPadding(16, 16, 16, 16);
+            txt.setTextSize(16);
+            txt.setCompoundDrawablesWithIntrinsicBounds(0, 0, android.R.drawable.arrow_down_float, 0);
+            txt.setText(items.get(i));
+            txt.setTextColor(Color.parseColor("#000000"));
+            return  txt;
+        }
+
+        @Override
+        public int getViewTypeCount() {
+            return 0;
+        }
+
+        @Override
+        public boolean hasStableIds() {
+            return false;
+        }
+
+        @Override
+        public boolean isEmpty() {
+            return false;
+        }
+
+        @Override
+        public void registerDataSetObserver(DataSetObserver observer) {
+
+        }
+
+        @Override
+        public void unregisterDataSetObserver(DataSetObserver observer) {
+
+        }
     }
 }
