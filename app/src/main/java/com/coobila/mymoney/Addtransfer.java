@@ -27,6 +27,9 @@ import android.widget.SpinnerAdapter;
 import android.widget.TableRow;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import androidx.appcompat.app.AppCompatDelegate;
+
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
@@ -277,6 +280,9 @@ public class Addtransfer extends Activity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.addtransfer);
+        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
+
+
         double ItemMount = 0.0d;
 //        String tSDCardPath = Environment.getExternalStorageDirectory().getAbsolutePath();
         String tSDCardPath = String.valueOf(getExternalFilesDir(null));

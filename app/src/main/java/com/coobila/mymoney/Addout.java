@@ -35,6 +35,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatDelegate;
 
 import com.google.android.material.appbar.MaterialToolbar;
 
@@ -274,9 +275,10 @@ public class Addout extends AppCompatActivity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.addout);
+        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
 
-        MaterialToolbar tb = findViewById(R.id.toolbar);
-        setSupportActionBar(tb);
+//        MaterialToolbar tb = findViewById(R.id.toolbar);
+//        setSupportActionBar(tb);
 
         double ItemMount = 0.0d;
         this.DataNoteFocus = new StringBuilder(String.valueOf(this.DataNoteFocus)).toString();
@@ -471,19 +473,14 @@ public class Addout extends AppCompatActivity {
             this.cursor2.close();
         }
         this.cursor.close();
-//        ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, allCountries);
-//        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-//        this.SOURCE_ITEM = (Spinner) findViewById(R.id.SOURCE_ITEM);
-//        this.SOURCE_ITEM.setAdapter((SpinnerAdapter) adapter);
-
-        ArrayList planets = new ArrayList(Arrays.asList(allCountries));
-        CustomSpinnerAdapter customSpinnerAdapter=new CustomSpinnerAdapter(this, planets);
-        this.SOURCE_ITEM.setAdapter(customSpinnerAdapter);
-
         ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, allCountries);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         this.SOURCE_ITEM = (Spinner) findViewById(R.id.SOURCE_ITEM);
         this.SOURCE_ITEM.setAdapter((SpinnerAdapter) adapter);
+
+//        ArrayList planets = new ArrayList(Arrays.asList(allCountries));
+//        CustomSpinnerAdapter customSpinnerAdapter=new CustomSpinnerAdapter(this, planets);
+//        this.SOURCE_ITEM.setAdapter(customSpinnerAdapter);
 
         ArrayAdapter<String> adapterv = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, allCountriesv);
         adapterv.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);

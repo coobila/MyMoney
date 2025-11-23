@@ -61,6 +61,7 @@
         <activity android:name="Report04"/>
         <activity android:name="InOutDetailShow"/>
         <activity android:name="AssetDetailShow"/>
+        <activity android:name="SystemSet"/>
     </application>
 
 </manifest>

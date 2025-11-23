@@ -30,6 +30,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatDelegate;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
@@ -116,7 +117,7 @@ public class MyMoneyZeroActivity extends AppCompatActivity {
             } catch (Exception e) {
             }
         }
-        if (!this.AccountPassword.trim().equals(this.InputPassword.trim()) && !this.AccountPassword.trim().isEmpty()) {
+        if (!this.AccountPassword.trim().equals(this.InputPassword.trim())) {
             ShowInputPassword();
         } else {
             makeText(this, "系統訊息：程式更新調整中，此功能暫時停止使用!", LENGTH_LONG).show();
@@ -163,6 +164,7 @@ public class MyMoneyZeroActivity extends AppCompatActivity {
         context = getApplicationContext();//給全域變數
         setContentView(R.layout.main);
 
+        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
 //        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
 //            Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
 //            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
@@ -176,10 +178,10 @@ public class MyMoneyZeroActivity extends AppCompatActivity {
         activityList.add(this);
 //        File dir = getFilesDir();
 
-        exportDB(this);
+//        exportDB(this);
 
 //        appDBPath = new File(getExternalFilesDir(null) + "/MyMoneyZero/mymoney.db");
-        chooseFileToImport();
+//        chooseFileToImport();
 
         //判斷有無資料庫
         int OpenDataBase = 0;
@@ -477,10 +479,10 @@ public class MyMoneyZeroActivity extends AppCompatActivity {
                     } catch (Exception e7) {
                     }
                 }
-//                Intent intent16 = new Intent();
-//                intent16.setClass(MyMoneyZeroActivity.this, SystemSet.class);
-//                MyMoneyZeroActivity.this.startActivity(intent16);
-//                MyMoneyZeroActivity.this.finish();
+                Intent intent16 = new Intent();
+                intent16.setClass(MyMoneyZeroActivity.this, SystemSet.class);
+                MyMoneyZeroActivity.this.startActivity(intent16);
+                MyMoneyZeroActivity.this.finish();
             }
             if (item.get("ItemText").equals("帳本選擇")) {
                 if (MyMoneyZeroActivity.this.ShowVibrate.equals("1")) {

@@ -28,6 +28,9 @@ import android.widget.SpinnerAdapter;
 import android.widget.TableRow;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import androidx.appcompat.app.AppCompatDelegate;
+
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
@@ -222,6 +225,8 @@ public class Addin extends Activity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.addin);
+        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
+
         double ItemMount = 0.0d;
 //        String tSDCardPath = Environment.getExternalStorageDirectory().getAbsolutePath();
         String tSDCardPath = String.valueOf(getExternalFilesDir(null));
