@@ -277,6 +277,14 @@ public class Addout extends AppCompatActivity {
         setContentView(R.layout.addout);
         AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
 
+        //        if (this.isInMultiWindowMode()) {
+//            // 處於分屏模式
+//            Toast.makeText(this, "處於分屏模式", Toast.LENGTH_SHORT).show();
+//        } else {
+//            // 處於全螢幕模式
+//            Toast.makeText(this, "處於全螢幕模式", Toast.LENGTH_SHORT).show();
+//        }
+        
 //        MaterialToolbar tb = findViewById(R.id.toolbar);
 //        setSupportActionBar(tb);
 
