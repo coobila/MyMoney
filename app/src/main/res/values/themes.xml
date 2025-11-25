@@ -10,4 +10,8 @@
     <style name="ToolbarTitleStyle" parent="TextAppearance.Material3.TitleLarge">
         <item name="android:textSize">14sp</item>   <!-- 想多大調多大 -->
     </style>
+
+     <style name="CustomSpinnerStyle" parent="Theme.Material3.Light">
+        <item name="android:padding">1dp</item>
+      </style>
 </resources>
