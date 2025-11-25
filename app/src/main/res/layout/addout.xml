@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:gravity="top|center_horizontal"
     android:orientation="vertical"
     android:background="@drawable/mainback5"
@@ -38,9 +39,11 @@
 
                     <EditText
                         android:id="@+id/DATA_DATE"
+                        android:textSize="14dp"
                         android:layout_width="179dp"
                         android:layout_height="wrap_content"
-                        android:singleLine="true" />
+                        android:singleLine="true"
+                        android:background="@drawable/custom_edittext_background"/>
 
                     <TableRow
                         android:gravity="center"
@@ -48,7 +51,7 @@
                         android:layout_width="55dp"
                         android:layout_height="40dp">
                         <TextView
-                            android:textSize="16dp"
+                            android:textSize="14dp"
                             android:textColor="#000000"
                             android:id="@+id/WeekView"
                             android:layout_width="wrap_content"
@@ -62,6 +65,7 @@
                 android:visibility="gone"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
                 android:layout_marginLeft="5dp">
                 <TextView
                     android:textSize="16dp"
@@ -73,13 +77,15 @@
                     android:id="@+id/SOURCE_ITEM"
                     android:layout_width="230dp"
                     android:layout_height="wrap_content"
-                    android:background="@drawable/custom_spinner_background"/>
+                    android:theme="@style/CustomSpinnerStyle"
+                    android:background="@drawable/spinner_back"/>
             </TableRow>
             <TableRow
                 android:gravity="center"
                 android:id="@+id/tableRow22"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
                 android:layout_marginLeft="5dp">
                 <TextView
                     android:textSize="16dp"
@@ -91,13 +97,16 @@
                 <Spinner
                     android:id="@+id/VSOURCE_ITEM"
                     android:layout_width="230dp"
-                    android:layout_height="wrap_content"/>
+                    android:layout_height="wrap_content"
+                    android:theme="@style/CustomSpinnerStyle"
+                    android:background="@drawable/spinner_back"/>
             </TableRow>
             <TableRow
                 android:gravity="center"
                 android:id="@+id/tableRow23"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
                 android:layout_marginLeft="5dp">
                 <TextView
                     android:textSize="16dp"
@@ -108,13 +117,16 @@
                 <Spinner
                     android:id="@+id/OBJECT_ITEM"
                     android:layout_width="230dp"
-                    android:layout_height="wrap_content"/>
+                    android:layout_height="wrap_content"
+                    android:theme="@style/CustomSpinnerStyle"
+                    android:background="@drawable/spinner_back"/>
             </TableRow>
             <TableRow
                 android:gravity="center"
                 android:id="@+id/tableRow24"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
                 android:layout_marginLeft="5dp">
                 <TextView
                     android:textSize="16dp"
@@ -126,18 +138,21 @@
                 <Spinner
                     android:id="@+id/SUB_OBJECT_ITEM"
                     android:layout_width="230dp"
-                    android:layout_height="wrap_content"/>
+                    android:layout_height="wrap_content"
+                    android:theme="@style/CustomSpinnerStyle"
+                    android:background="@drawable/spinner_back"/>
             </TableRow>
             <LinearLayout
                 android:orientation="vertical"
                 android:id="@+id/linearLayout15"
-                android:paddingLeft="5dp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content">
                 <TableRow
                     android:gravity="center"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content">
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp"
+                    android:layout_marginLeft="30dp">
                     <TextView
                         android:textSize="16dp"
                         android:textColor="#000000"
@@ -146,12 +161,12 @@
                         android:layout_height="wrap_content"
                         android:text="支出金額："/>
                     <TableRow
-                        android:layout_width="152dp"
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content">
 
                         <EditText
                             android:id="@+id/INOUT_MOUNT"
-                            android:layout_width="152dp"
+                            android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:hint="請點擊輸入金額"
                             android:singleLine="true"
@@ -161,8 +176,8 @@
                     <Button
                         android:id="@+id/DetailInput"
                         android:layout_width="wrap_content"
-                        android:layout_height="45dp"
-                        android:text="詳細備註"
+                        android:layout_height="wrap_content"
+                        android:text="備註"
                         android:onClick="ShowDetailInput"/>
                 </TableRow>
             </LinearLayout>
@@ -172,6 +187,7 @@
                 android:visibility="visible"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
                 android:layout_marginLeft="5dp">
                 <TextView
                     android:textSize="16dp"
@@ -185,12 +201,14 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:hint="請點擊輸入發票號碼"
-                    android:singleLine="true"/>
+                    android:singleLine="true"
+                    android:background="@drawable/custom_edittext_background"/>
             </TableRow>
             <LinearLayout
                 android:orientation="vertical"
                 android:id="@+id/linearLayout1"
                 android:paddingLeft="5dp"
+                android:layout_marginTop="5dp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content">
                 <TableRow
@@ -214,7 +232,8 @@
                             android:layout_width="195dp"
                             android:layout_height="wrap_content"
                             android:hint="請點擊輸入摘要記錄"
-                            android:singleLine="true"/>
+                            android:singleLine="true"
+                            android:background="@drawable/custom_edittext_background"/>
                     </TableRow>
                     <Button
                         android:id="@+id/SOften"
@@ -228,6 +247,7 @@
                 android:orientation="vertical"
                 android:id="@+id/ShowPayCollFrame"
                 android:paddingLeft="5dp"
+                android:layout_marginTop="5dp"
                 android:visibility="gone"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
@@ -255,7 +275,8 @@
                             android:layout_width="195dp"
                             android:layout_height="wrap_content"
                             android:hint="請點擊輸入收付人"
-                            android:singleLine="true"/>
+                            android:singleLine="true"
+                            android:background="@drawable/custom_edittext_background"/>
                     </TableRow>
                     <Button
                         android:id="@+id/SCollPayName"
@@ -270,6 +291,7 @@
                 android:id="@+id/ShowProjectFrame"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
                 android:layout_marginLeft="5dp">
                 <TextView
                     android:textSize="16dp"
@@ -283,20 +305,23 @@
                     android:id="@+id/PROJECT_NAME"
                     android:visibility="visible"
                     android:layout_width="230dp"
-                    android:layout_height="wrap_content"/>
+                    android:layout_height="wrap_content"
+                    android:theme="@style/CustomSpinnerStyle"
+                    android:background="@drawable/spinner_back"/>
             </TableRow>
         </TableLayout>
     </LinearLayout>
     <TableRow
         android:gravity="center"
         android:id="@+id/tableRow5"
+        android:layout_marginTop="15dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content">
         <Button
             android:textSize="14dp"
             android:id="@+id/VOICE_INPUT"
             android:visibility="invisible"
-            android:layout_width="84dp"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="語音輸入"
             android:onClick="VoiceInput"/>
@@ -307,12 +332,12 @@
         <TableRow
             android:gravity="center"
             android:id="@+id/tableRow8"
-            android:layout_width="240dp"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content">
             <Button
                 android:textSize="14dp"
                 android:id="@+id/SaveNext"
-                android:layout_width="77dp"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text=" 下一筆 "
                 android:onClick="SaveDataNext"/>
@@ -323,7 +348,7 @@
                 <Button
                     android:textSize="14dp"
                     android:id="@+id/SaveExit"
-                    android:layout_width="77dp"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text=" 存  入 "
                     android:onClick="SaveDataExit"/>
@@ -335,7 +360,7 @@
                 <Button
                     android:textSize="14dp"
                     android:id="@+id/Close"
-                    android:layout_width="77dp"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text=" 離  開 "
                     android:onClick="CloseReturn"/>
