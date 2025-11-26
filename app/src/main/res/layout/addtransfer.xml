@@ -6,18 +6,19 @@
     android:paddingTop="8dp"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
+
     <TableLayout
         android:gravity="top|center_horizontal"
         android:id="@+id/tableLayout1"
         android:layout_width="match_parent"
-        android:layout_height="450dp"
+        android:layout_height="wrap_content"
         android:layout_margin="2dp">
         <TableRow
             android:gravity="center"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
             <TextView
-                android:textSize="16dp"
+                android:textSize="16sp"
                 android:textColor="#000000"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -34,7 +35,8 @@
                         android:id="@+id/DATA_DATE"
                         android:layout_width="179dp"
                         android:layout_height="wrap_content"
-                        android:singleLine="true"/>
+                        android:singleLine="true"
+                        android:background="@drawable/custom_edittext_background"/>
                 </TableRow>
                 <TableRow
                     android:gravity="center"
@@ -42,7 +44,7 @@
                     android:layout_width="55dp"
                     android:layout_height="40dp">
                     <TextView
-                        android:textSize="16dp"
+                        android:textSize="16sp"
                         android:textColor="#000000"
                         android:id="@+id/WeekView"
                         android:layout_width="wrap_content"
@@ -55,9 +57,10 @@
             android:gravity="center"
             android:visibility="gone"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp">
             <TextView
-                android:textSize="16dp"
+                android:textSize="16sp"
                 android:textColor="#000000"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -72,9 +75,10 @@
             android:gravity="center"
             android:id="@+id/tableRow2"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp">
             <TextView
-                android:textSize="16dp"
+                android:textSize="16sp"
                 android:textColor="#000000"
                 android:id="@+id/textView4"
                 android:layout_width="wrap_content"
@@ -84,15 +88,18 @@
                 android:id="@+id/VSOURCE_ITEM"
                 android:layout_width="230dp"
                 android:layout_height="wrap_content"
-                android:cacheColorHint="#00000000"/>
+                android:cacheColorHint="#00000000"
+                android:theme="@style/CustomSpinnerStyle"
+                android:background="@drawable/spinner_back"/>
         </TableRow>
         <TableRow
             android:gravity="center"
             android:visibility="gone"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp">
             <TextView
-                android:textSize="16dp"
+                android:textSize="16sp"
                 android:textColor="#000000"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -100,14 +107,17 @@
             <Spinner
                 android:id="@+id/OBJECT_ITEM"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"/>
+                android:layout_height="wrap_content"
+                android:theme="@style/CustomSpinnerStyle"
+                android:background="@drawable/spinner_back"/>
         </TableRow>
         <TableRow
             android:gravity="center"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp">
             <TextView
-                android:textSize="16dp"
+                android:textSize="16sp"
                 android:textColor="#000000"
                 android:id="@+id/VtextView5"
                 android:layout_width="wrap_content"
@@ -116,14 +126,17 @@
             <Spinner
                 android:id="@+id/VOBJECT_ITEM"
                 android:layout_width="230dp"
-                android:layout_height="wrap_content"/>
+                android:layout_height="wrap_content"
+                android:theme="@style/CustomSpinnerStyle"
+                android:background="@drawable/spinner_back"/>
         </TableRow>
         <TableRow
             android:gravity="center"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp">
             <TextView
-                android:textSize="16dp"
+                android:textSize="16sp"
                 android:textColor="#000000"
                 android:id="@+id/VEXCHANGE"
                 android:layout_width="wrap_content"
@@ -137,7 +150,8 @@
                     android:layout_width="130dp"
                     android:layout_height="wrap_content"
                     android:hint="請輸入金額"
-                    android:singleLine="true"/>
+                    android:singleLine="true"
+                    android:background="@drawable/custom_edittext_background"/>
                 <TableRow
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content">
@@ -154,9 +168,10 @@
             android:gravity="center"
             android:id="@+id/tableRow1"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp">
             <TextView
-                android:textSize="16dp"
+                android:textSize="16sp"
                 android:textColor="#000000"
                 android:id="@+id/VDATA_NOTE"
                 android:layout_width="wrap_content"
@@ -171,7 +186,8 @@
                     android:layout_width="195dp"
                     android:layout_height="wrap_content"
                     android:hint="請點擊輸入摘要記錄"
-                    android:singleLine="true"/>
+                    android:singleLine="true"
+                    android:background="@drawable/custom_edittext_background"/>
                 <TableRow
                     android:id="@+id/tableRow13"
                     android:layout_width="wrap_content"
@@ -189,9 +205,10 @@
             android:gravity="center"
             android:id="@+id/ShowPayCollFrame"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp">
             <TextView
-                android:textSize="16dp"
+                android:textSize="16sp"
                 android:textColor="#000000"
                 android:id="@+id/VPAY_COLL_NAME"
                 android:visibility="visible"
@@ -208,7 +225,8 @@
                     android:layout_width="195dp"
                     android:layout_height="wrap_content"
                     android:hint="請點擊輸入收付人"
-                    android:singleLine="true"/>
+                    android:singleLine="true"
+                    android:background="@drawable/custom_edittext_background"/>
                 <TableRow
                     android:id="@+id/tableRow15"
                     android:layout_width="wrap_content"
@@ -226,9 +244,10 @@
             android:gravity="center"
             android:id="@+id/tableRow3"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp">
             <TextView
-                android:textSize="16dp"
+                android:textSize="16sp"
                 android:textColor="#000000"
                 android:id="@+id/TextView3"
                 android:layout_width="wrap_content"
@@ -237,15 +256,18 @@
             <Spinner
                 android:id="@+id/CHARGE_ITEM"
                 android:layout_width="230dp"
-                android:layout_height="wrap_content"/>
+                android:layout_height="wrap_content"
+                android:theme="@style/CustomSpinnerStyle"
+                android:background="@drawable/spinner_back"/>
         </TableRow>
         <TableRow
             android:gravity="center"
             android:id="@+id/tableRow4"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp">
             <TextView
-                android:textSize="16dp"
+                android:textSize="16sp"
                 android:textColor="#000000"
                 android:id="@+id/VCHARGE_MOUNT"
                 android:layout_width="wrap_content"
@@ -256,13 +278,15 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="0"
-                android:singleLine="true"/>
+                android:singleLine="true"
+                android:background="@drawable/custom_edittext_background"/>
         </TableRow>
         <TableRow
             android:gravity="center"
             android:id="@+id/tableRow5"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp">
             <Button
                 android:textSize="14dp"
                 android:id="@+id/VOICE_INPUT"
@@ -274,12 +298,15 @@
             <Spinner
                 android:id="@+id/PROJECT_ID"
                 android:visibility="gone"
-                android:layout_height="wrap_content"/>
+                android:layout_height="wrap_content"
+                android:theme="@style/CustomSpinnerStyle"
+                android:background="@drawable/spinner_back"/>
             <TableRow
                 android:gravity="center"
                 android:id="@+id/tableRow8"
                 android:layout_width="240dp"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp">
                 <Button
                     android:textSize="14dp"
                     android:id="@+id/SaveNext"
@@ -292,7 +319,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content">
                     <Button
-                        android:textSize="14dp"
+                        android:textSize="14sp"
                         android:id="@+id/SaveExit"
                         android:layout_width="78dp"
                         android:layout_height="wrap_content"
@@ -304,7 +331,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content">
                     <Button
-                        android:textSize="14dp"
+                        android:textSize="14sp"
                         android:id="@+id/Close"
                         android:layout_width="78dp"
                         android:layout_height="wrap_content"
